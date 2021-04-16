@@ -44,7 +44,7 @@ class AuthController extends Controller
 
         if ($auth_attempt) {
             $access_token = Auth::user()->createToken('authToken')->accessToken;
-            
+
             return response()->json([
                 'user' => Auth::user(),
                 'access_token' => $access_token
@@ -81,14 +81,26 @@ class AuthController extends Controller
 
         if ($auth_attempt) {
             $access_token = Auth::user()->createToken('authToken')->accessToken;
-            
+
             return response()->json([
                 'access_token' => $access_token
             ]);
         }
 
-        return response()->json(['status' => 'auth_error', 'error'=>'Invalid credentials'] ,401);
+        return response()->json(['status' => 'auth_error', 'error' => 'Invalid credentials'], 401);
     }
 
-    
+    /**
+     * Log out
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $access_token = Auth::user()->token();
+        $access_token->delete();
+        return response()->json([
+            'message' => 'User logout successful'
+        ]);
+    }
 }

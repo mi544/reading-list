@@ -21,9 +21,26 @@ use Illuminate\Support\Facades\Route;
 ///////////////////////////
 // Authentication Routes //
 ///////////////////////////
-Route::prefix('/auth')->group(
-    function () {
-        Route::post('/register', [AuthController::class, 'register']);
-        Route::post('/login', [AuthController::class, 'login']);
-    }
-);
+Route::group([], function () {
+    Route::prefix('/auth')->group(
+        function () {
+            Route::post('/register', [AuthController::class, 'register']);
+            Route::post('/login', [AuthController::class, 'login']);
+        }
+    );
+});
+
+//////////////////////////
+// Authenticated Routes //
+//////////////////////////
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::prefix('/auth')->group(
+        function () {
+            Route::delete('/logout', [AuthController::class, 'logout']);
+        }
+    );
+
+    Route::get('/test', function () {
+        return response()->json(['status' => 'success']);
+    });
+});
