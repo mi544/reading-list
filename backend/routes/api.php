@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GAPIBookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,18 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+///////////////////////////
+// Publicly Available Routes //
+///////////////////////////
+Route::group([], function () {
+    Route::prefix('/gbook')->group(
+        function () {
+            Route::get('/id/{book_id}', [GAPIBookController::class, 'getById']);
+            Route::get('/name/{book_name}', [GAPIBookController::class, 'getByName']);
+        }
+    );
+});
 
 ///////////////////////////
 // Authentication Routes //
