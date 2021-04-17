@@ -54,6 +54,21 @@ Route::group(['middleware' => ['auth:api']], function () {
         }
     );
 
+    Route::get('/books', [BookController::class, 'index']);
+
+    Route::prefix('/book')->group(
+        function () {
+            Route::get('/{book_id}', [BookController::class, 'show']);
+            Route::post('/', [BookController::class, 'store']);
+            Route::put('/', [BookController::class, 'update']);
+            Route::delete('/{book_id}', [BookController::class, 'destroy']);
+        }
+    );
+
+    Route::get('/test', function () {
+        return response()->json(['status' => 'success']);
+    });
+
     Route::get('/test', function () {
         return response()->json(['status' => 'success']);
     });
