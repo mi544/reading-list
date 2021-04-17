@@ -103,4 +103,18 @@ class AuthController extends Controller
             'message' => 'User logout successful'
         ]);
     }
+
+
+    /**
+     * Display information about logged in user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function info(Request $request)
+    {
+        return Auth::user();
+        return response()->json([
+            'message' => 'User logout successful'
+        ]);
+    }
 }

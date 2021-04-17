@@ -50,6 +50,7 @@ Route::group([], function () {
 Route::group(['middleware' => ['auth:api']], function () {
     Route::prefix('/auth')->group(
         function () {
+            Route::get('/info', [AuthController::class, 'info']);
             Route::delete('/logout', [AuthController::class, 'logout']);
         }
     );
@@ -64,10 +65,6 @@ Route::group(['middleware' => ['auth:api']], function () {
             Route::delete('/{book_id}', [BookController::class, 'destroy']);
         }
     );
-
-    Route::get('/test', function () {
-        return response()->json(['status' => 'success']);
-    });
 
     Route::get('/test', function () {
         return response()->json(['status' => 'success']);
