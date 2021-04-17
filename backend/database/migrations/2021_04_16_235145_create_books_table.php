@@ -15,9 +15,11 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('g_book_id')->unique();
+            $table->string('g_book_id')->nullable();
+            $table->string('thumbnail_url', 400)->nullable();
             $table->string('title');
-            $table->string('author');
+            $table->string('subtitle')->nullable();
+            $table->string('authors')->nullable();
             $table->boolean('finished')->default(false);
             $table->timestamp('finished_at')->nullable();
             $table->unsignedInteger('order');
