@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import useAuthentication from '@/composables/useAuthentication.js'
+import { loadDataFromStorage } from '@/composables/useAuthentication.js'
 import BookHeader from '@C/BookHeader.vue'
 import BookFooter from '@C/BookFooter.vue'
 
@@ -17,8 +17,6 @@ export default {
     BookFooter,
   },
   setup() {
-    const { loadDataFromStorage } = useAuthentication()
-
     loadDataFromStorage()
 
     return {}

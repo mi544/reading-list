@@ -1,12 +1,14 @@
 <template>
   <router-link :to="to">
-    <slot></slot>
+    <li>
+      <slot></slot>
+    </li>
   </router-link>
 </template>
 
 <script>
 export default {
-  name: 'LinkItem',
+  name: 'LinkListItem',
   props: {
     to: { type: String, required: true },
   },

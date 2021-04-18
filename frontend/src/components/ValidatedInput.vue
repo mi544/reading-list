@@ -29,25 +29,28 @@ export default {
     lengthMin: { type: Number, default: () => null },
     lengthMax: { type: Number, default: () => null },
   },
-  emits: ['input-change'],
-  setup(props) {
+  emits: ['input-change', 'input-valid'],
+  setup(props, { emit }) {
     const input = ref('')
     const inputClicked = ref(false)
 
     const inputValid = computed(() => {
       if (props.lengthMin && input.value.length < props.lengthMin) {
+        emit('input-valid', false)
         return {
           status: false,
           message: `${props.name} should be at least ${props.lengthMin} characters long`,
         }
       }
       if (props.lengthMax && input.value.length > props.lengthMax) {
+        emit('input-valid', false)
         return {
           status: false,
           message: `${props.name} should be less than ${props.lengthMax} characters long`,
         }
       }
 
+      emit('input-valid', true)
       return {
         status: true,
       }
