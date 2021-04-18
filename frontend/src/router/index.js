@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import useAuthentication from '@/composables/useAuthentication.js'
+import { isAuthenticated } from '@/composables/useAuthentication.js'
 import Index from '../pages/Index.vue'
 import About from '../pages/About.vue'
 import Contact from '../pages/Contact.vue'
@@ -17,7 +17,8 @@ const routes = [
     component: Index,
     meta: {
       title: 'Book Store',
-      public: true,
+      unauthorized: true,
+      authorized: true,
     },
   },
   {
@@ -25,7 +26,8 @@ const routes = [
     component: About,
     meta: {
       title: 'About - Book Store',
-      public: true,
+      unauthorized: true,
+      authorized: true,
     },
   },
   {
@@ -33,7 +35,8 @@ const routes = [
     component: Contact,
     meta: {
       title: 'Contact - Book Store',
-      public: true,
+      unauthorized: true,
+      authorized: true,
     },
   },
   {
@@ -41,7 +44,8 @@ const routes = [
     component: Login,
     meta: {
       title: 'Login - Book Store',
-      public: true,
+      unauthorized: true,
+      authorized: false,
     },
   },
   {
@@ -49,7 +53,8 @@ const routes = [
     component: Register,
     meta: {
       title: 'Register - Book Store',
-      public: true,
+      unauthorized: true,
+      authorized: false,
     },
   },
   {
@@ -57,7 +62,8 @@ const routes = [
     component: Dashboard,
     meta: {
       title: 'Dashboard - Book Store',
-      public: false,
+      unauthorized: false,
+      authorized: true,
     },
   },
   {
@@ -65,7 +71,8 @@ const routes = [
     component: ReadingList,
     meta: {
       title: 'Reading List - Book Store',
-      public: false,
+      unauthorized: false,
+      authorized: true,
     },
   },
   {
@@ -73,7 +80,8 @@ const routes = [
     component: Books,
     meta: {
       title: 'Books - Book Store',
-      public: true,
+      unauthorized: true,
+      authorized: true,
     },
   },
   {
@@ -81,7 +89,8 @@ const routes = [
     component: Book,
     meta: {
       title: 'Book - Book Store',
-      public: true,
+      unauthorized: true,
+      authorized: true,
     },
   },
   {
@@ -89,7 +98,8 @@ const routes = [
     component: NotFound,
     meta: {
       title: '404 Not Found - Book Store',
-      public: true,
+      unauthorized: true,
+      authorized: true,
     },
   },
 ]
@@ -100,9 +110,14 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  const { isAuthenticated } = useAuthentication()
-  if (!to.meta.public && !isAuthenticated.value) return '/login'
-  return true
+  // we are authenticated
+  if (isAuthenticated.value) {
+    if (to.meta.authorized) return true
+    return '/dashboard'
+  }
+  // we are not authenticated
+  if (to.meta.unauthorized) return true
+  return '/login'
 })
 
 router.afterEach((to) => {
