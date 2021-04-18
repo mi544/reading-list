@@ -1,7 +1,11 @@
 <template>
-  <div class="flex-grow bg-gray-400">So here we are... books!</div>
+  <div class="flex-grow flex items-center justify-center text-2xl"
+    >So here we are... books!</div
+  >
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'Books',
+}
 </script>

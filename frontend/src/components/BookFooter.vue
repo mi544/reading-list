@@ -1,17 +1,13 @@
 <template>
-  <header class="flex bg-green-200">
-    <p>img</p>
-    <h1>Footer</h1>
-    <nav>
-      <ul class="flex">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-      </ul>
-    </nav>
-  </header>
+  <footer
+    class="h-12 bg-primary-100 flex justify-center items-center border-black border-t"
+  >
+    <h4>&lt;3</h4>
+  </footer>
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'BookFooter',
+}
 </script>

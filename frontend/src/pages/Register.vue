@@ -1,7 +1,11 @@
 <template>
-  <div class="flex-grow bg-gray-400">So here we are... register!</div>
+  <div class="flex-grow flex items-center justify-center text-2xl"
+    >So here we are... register!</div
+  >
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'Register',
+}
 </script>

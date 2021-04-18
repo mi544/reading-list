@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen bg-info-50 font-roboto flex flex-col">
     <book-header />
     <router-view></router-view>
     <book-footer />
@@ -7,13 +7,13 @@
 </template>
 
 <script>
-import BookHeader from './components/BookHeader.vue'
-import BookFooter from './components/BookFooter.vue'
+import BookHeader from '@C/BookHeader.vue'
+import BookFooter from '@C/BookFooter.vue'
 
 export default {
   components: {
     BookHeader,
-    BookFooter
-  }
+    BookFooter,
+  },
 }
 </script>
