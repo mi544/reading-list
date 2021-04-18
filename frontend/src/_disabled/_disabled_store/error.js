@@ -7,6 +7,7 @@ const actions = {}
 const getters = {}
 
 export const errorModule = {
+  namespaced: true,
   state,
   mutations,
   actions,
