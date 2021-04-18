@@ -12,6 +12,11 @@ export const loginAccount = async (query) => {
   return await authServiceClient.post('/login', query)
 }
 
+export const logoutAccount = async (token) => {
+  const config = { headers: { Authorization: `Bearer ${token}` } }
+  return await authServiceClient.delete('/logout', config)
+}
+
 export const getAccountInfo = async (token) => {
   const config = { headers: { Authorization: `Bearer ${token}` } }
   return await authServiceClient.get('/info', config)

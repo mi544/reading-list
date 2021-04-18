@@ -15,8 +15,8 @@ class ApiClient {
   update(path, payload) {
     return this.axios.put(path, payload)
   }
-  delete(path) {
-    return this.axios.delete(path)
+  delete(path, config) {
+    return this.axios.delete(path, config)
   }
 }
 
