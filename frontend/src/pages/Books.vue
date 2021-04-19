@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-grow">
+  <main class="flex-grow">
     <book-search
       :q-search-type="searchType"
       :q-search-query="query"
@@ -15,7 +15,7 @@
         :authors="book.authors"
       />
     </section>
-  </div>
+  </main>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-grow flex flex-col items-center justify-center text-2xl">
+  <main class="flex-grow flex flex-col items-center justify-center text-2xl">
     <form
       class="flex flex-col justify-center items-center w-3/4"
       @submit.prevent="logIn"
@@ -31,7 +31,7 @@
         <link-item to="/register" class="underline">Register</link-item>
       </p>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>

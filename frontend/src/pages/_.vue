@@ -1,7 +1,7 @@
 <template>
-  <div class="flex-grow flex items-center justify-center text-2xl">
+  <main class="flex-grow flex items-center justify-center text-2xl">
     404 Not Found ({{ $route.params.pathMatch }})
-  </div>
+  </main>
 </template>
 
 <script>

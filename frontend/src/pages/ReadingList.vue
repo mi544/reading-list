@@ -1,7 +1,7 @@
 <template>
-  <div class="flex-grow flex items-center justify-center text-2xl"
-    >So here we are... reading list!</div
-  >
+  <main class="flex-grow flex items-center justify-center text-2xl">
+    So here we are... reading list!
+  </main>
 </template>
 
 <script>
