@@ -78,12 +78,25 @@ class BookController extends Controller
             return response()->json($response_data, 500);
         }
 
+        // see if a book with that gid already exists for that user
+        $book_found = $user->books()->where('g_book_id', $book_data['id'])->first();
+
+        // if a book with that id exists, don't add it
+        if ($book_found) {
+            $response_data = [
+                'status' => 'error_book_already_exists',
+            ];
+
+            return response()->json($response_data, 303);
+        }
+
         $new_book = Book::create([
             'g_book_id' => $book_data['id'],
             'thumbnail_url' => isset($book_data['volumeInfo']['imageLinks']['thumbnail']) ? $book_data['volumeInfo']['imageLinks']['thumbnail'] : null,
             'title' =>  $book_data['volumeInfo']['title'],
             'subtitle' =>  isset($book_data['volumeInfo']['subtitle']) ? $book_data['volumeInfo']['subtitle'] : null,
             'authors' =>  isset($book_data['volumeInfo']['authors']) ? json_encode($book_data['volumeInfo']['authors']) : null,
+            'categories' =>  isset($book_data['volumeInfo']['categories']) ? json_encode($book_data['volumeInfo']['categories']) : null,
             'order' =>  $last_book_order_num + 1,
             'user_id' => $user_id,
         ]);
