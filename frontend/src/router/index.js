@@ -83,6 +83,11 @@ const routes = [
       unauthorized: true,
       authorized: true,
     },
+    props: (route) => ({
+      searchType: route.query.t || null,
+      query: route.query.q || null,
+      page: parseInt(route.query.p) ? parseInt(route.query.p) - 1 : null,
+    }),
   },
   {
     path: '/book/:gbook_id',

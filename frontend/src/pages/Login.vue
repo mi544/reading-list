@@ -73,7 +73,6 @@ export default {
       }
       try {
         const res = await loginAccount(query)
-        console.log(res.data)
 
         const userData = {
           name: res.data.user.name,

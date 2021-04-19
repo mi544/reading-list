@@ -4,7 +4,8 @@
     :class="[
       small ? 'p-2' : 'py-4 px-10',
       red ? 'bg-danger-300' : 'bg-info-400',
-      'rounded-xl disabled:opacity-50',
+      rounded ? 'rounded-xl' : '',
+      'disabled:opacity-50',
     ]"
   >
     <slot></slot>
@@ -18,6 +19,7 @@ export default {
     type: { type: String, default: () => 'button' },
     small: { type: Boolean, default: () => false },
     red: { type: Boolean, default: () => false },
+    rounded: { type: Boolean, default: () => false },
   },
 }
 </script>
