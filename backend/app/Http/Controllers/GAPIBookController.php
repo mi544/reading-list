@@ -35,12 +35,12 @@ class GAPIBookController extends Controller
 
 
     /**
-     * Gets books by name.
+     * Gets books by general query.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getByName($book_name)
+    public function getByGeneralQuery($book_name, $page = 0)
     {
         $validator = Validator::make(['book_name' => $book_name], [
             'book_name' => ['required', 'string', 'min:1', 'max:200']
@@ -56,6 +56,6 @@ class GAPIBookController extends Controller
         }
 
 
-        return GAPIClient::getBookByName($book_name);
+        return GAPIClient::getBooksByGeneralQuery($book_name, $page);
     }
 }

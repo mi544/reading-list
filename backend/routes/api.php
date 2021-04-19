@@ -27,7 +27,7 @@ Route::group([], function () {
     Route::prefix('/gbook')->group(
         function () {
             Route::get('/id/{book_id}', [GAPIBookController::class, 'getById']);
-            Route::get('/name/{book_name}', [GAPIBookController::class, 'getByName']);
+            Route::get('/general/{book_name}/{page?}', [GAPIBookController::class, 'getByGeneralQuery']);
         }
     );
 });

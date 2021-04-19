@@ -18,10 +18,12 @@ class GAPIClient
         return $data;
     }
 
-    public static function getBookByName($book_name)
+    public static function getBooksByGeneralQuery($book_query, $page = 0)
     {
+        $start_index = $page == 0 ? 0 : $page * 9;
         $api_key = config('app.gapi_key');
-        $uri = self::$base_url . '?key=' . $api_key . '&q=' . $book_name;
+        $uri = self::$base_url . '?key=' . $api_key . '&q=' . $book_query . '&maxResults=9' .
+            '&startIndex=' . $start_index;
         return self::makeGetRequest($uri);
     }
 
