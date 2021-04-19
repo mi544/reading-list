@@ -14,10 +14,10 @@ class GAPIBookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getById($book_id)
+    public function getById($gid)
     {
-        $validator = Validator::make(['book_id' => $book_id], [
-            'book_id' => ['required', 'string', 'min:1', 'max:100']
+        $validator = Validator::make(['gid' => $gid], [
+            'gid' => ['required', 'string', 'min:1', 'max:100']
         ]);
 
         if ($validator->fails()) {
@@ -30,7 +30,7 @@ class GAPIBookController extends Controller
         }
 
 
-        return GAPIClient::getBookById($book_id);
+        return GAPIClient::getBookById($gid);
     }
 
 
@@ -40,10 +40,10 @@ class GAPIBookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getByGeneralQuery($book_name, $page = 0)
+    public function getByGeneralQuery($query, $page = 0)
     {
-        $validator = Validator::make(['book_name' => $book_name], [
-            'book_name' => ['required', 'string', 'min:1', 'max:200']
+        $validator = Validator::make(['query' => $query], [
+            'query' => ['required', 'string', 'min:1', 'max:200']
         ]);
 
         if ($validator->fails()) {
@@ -56,6 +56,6 @@ class GAPIBookController extends Controller
         }
 
 
-        return GAPIClient::getBooksByGeneralQuery($book_name, $page);
+        return GAPIClient::getBooksByGeneralQuery($query, $page);
     }
 }

@@ -27,10 +27,10 @@ class GAPIClient
         return self::makeGetRequest($uri);
     }
 
-    public static function getBookById($gBookId)
+    public static function getBookById($gid)
     {
         $api_key = config('app.gapi_key');
-        $uri = self::$base_url . '/' . $gBookId . '?key=' . $api_key;
+        $uri = self::$base_url . '/' . $gid . '?key=' . $api_key;
         return self::makeGetRequest($uri);
     }
 }

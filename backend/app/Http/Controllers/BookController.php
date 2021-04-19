@@ -143,6 +143,44 @@ class BookController extends Controller
         return response()->json($book_found);
     }
 
+
+    /**
+     * Show a specific book (by gid).
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showByGid($gid)
+    {
+        $validator = Validator::make(['gid' => $gid], [
+            'gid' => ['required', 'string', 'min:1', 'max:100']
+        ]);
+
+        if ($validator->fails()) {
+            $response_data = [
+                'status' => 'validation_error',
+                'errors' => $validator->errors(),
+            ];
+
+            return response()->json($response_data, 400);
+        }
+
+        $user_id = Auth::user()->id;
+
+        $user = User::find($user_id);
+        $book_found = $user->books()->where('g_book_id', $gid)->first();
+
+        if (!$book_found) {
+            $response_data = [
+                'status' => 'error_not_found',
+            ];
+
+            return response()->json($response_data, 404);
+        }
+
+        return response()->json($book_found);
+    }
+
     /**
      * Update a specific book to mark as complete.
      *

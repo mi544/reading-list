@@ -26,8 +26,8 @@ use App\Http\Controllers\GAPIBookController;
 Route::group([], function () {
     Route::prefix('/gbook')->group(
         function () {
-            Route::get('/id/{book_id}', [GAPIBookController::class, 'getById']);
-            Route::get('/general/{book_name}/{page?}', [GAPIBookController::class, 'getByGeneralQuery']);
+            Route::get('/id/{gid}', [GAPIBookController::class, 'getById']);
+            Route::get('/general/{query}/{page?}', [GAPIBookController::class, 'getByGeneralQuery']);
         }
     );
 });
@@ -60,6 +60,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::prefix('/book')->group(
         function () {
             Route::get('/{book_id}', [BookController::class, 'show']);
+            Route::get('/gid/{gid}', [BookController::class, 'showByGid']);
             Route::post('/', [BookController::class, 'store']);
             Route::put('/', [BookController::class, 'update']);
             Route::delete('/{book_id}', [BookController::class, 'destroy']);
