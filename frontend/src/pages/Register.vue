@@ -35,7 +35,7 @@
     <div class="py-12 flex">
       <p>
         Have an account?
-        <link-item :to="redirectObject" class="underline"> Login </link-item>
+        <router-link :to="redirectObject" class="underline">Login</router-link>
       </p>
     </div>
   </main>
@@ -47,13 +47,12 @@ import { useRouter } from 'vue-router'
 import { updateUserData } from '@/composables/useAuthentication.js'
 import { registerAccount } from '@/serviceClients/authClient.js'
 import ValidatedInput from '@C/ValidatedInput.vue'
-import LinkItem from '@C/LinkItem.vue'
 import BookButton from '@C/BookButton.vue'
 import Spinner from '@C/Spinner.vue'
 
 export default {
   name: 'Register',
-  components: { ValidatedInput, LinkItem, BookButton, Spinner },
+  components: { ValidatedInput, BookButton, Spinner },
   props: {
     redirectAfterAuth: { type: String, default: () => null },
   },

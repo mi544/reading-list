@@ -16,8 +16,6 @@
     <nav class="w-5/12 text-xl">
       <ul class="flex justify-evenly items-center">
         <link-list-item to="/books">Explore Books</link-list-item>
-        <link-list-item to="/about">About</link-list-item>
-        <link-list-item to="/contact">Contact</link-list-item>
         <div class="w-1/12"></div>
         <link-list-item v-if="isAuthenticated" to="/dashboard">
           Dashboard

@@ -28,16 +28,16 @@
         <book-button class="min-h-full" type="submit">Find</book-button>
       </div>
     </form>
-    <div class="mt-4">
-      <p class="px-2 py-1 mx-auto bg-success-100 w-max text-xl">
-        Page: {{ searchPage }}
-      </p>
-    </div>
     <div>
-      <div class="py-4 flex justify-around items-stretch">
+      <div class="mt-4 py-4 flex justify-around items-center">
         <book-button class="min-h-full" @click="onPreviousPage">
           Previous Page
         </book-button>
+        <div>
+          <p class="w-max px-2 py-1 bg-success-100 text-xl">
+            Page: {{ searchPage }}
+          </p>
+        </div>
         <book-button class="min-h-full" @click="onNextPage">
           Next Page
         </book-button>

@@ -19,7 +19,6 @@
         @input-change="passwordInput = $event"
         @input-valid="passwordValid = $event"
       />
-
       <book-button type="submit" :disabled="isLoading || !inputsValid">
         <span v-if="!isLoading">Login</span>
         <spinner v-else />
@@ -28,7 +27,9 @@
     <div class="py-12 flex">
       <p>
         No account yet?
-        <link-item :to="redirectObject" class="underline"> Register </link-item>
+        <router-link :to="redirectObject" class="underline"
+          >Register</router-link
+        >
       </p>
     </div>
   </main>
@@ -40,13 +41,12 @@ import { useRouter } from 'vue-router'
 import { loginAccount } from '@/serviceClients/authClient.js'
 import { updateUserData } from '@/composables/useAuthentication.js'
 import ValidatedInput from '@C/ValidatedInput.vue'
-import LinkItem from '@C/LinkItem.vue'
 import BookButton from '@C/BookButton.vue'
 import Spinner from '@C/Spinner.vue'
 
 export default {
   name: 'Login',
-  components: { ValidatedInput, LinkItem, BookButton, Spinner },
+  components: { ValidatedInput, BookButton, Spinner },
   props: {
     redirectAfterAuth: { type: String, default: () => null },
   },

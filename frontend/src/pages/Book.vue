@@ -40,7 +40,7 @@
       </section>
     </article>
   </main>
-  <div v-else>Spinner</div>
+  <div v-else class="flex-grow">Spinner</div>
 </template>
 
 <script>
