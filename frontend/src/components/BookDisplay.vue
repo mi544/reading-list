@@ -15,7 +15,9 @@
           :alt="`Book Thumbnail of ${title}`"
         />
       </div>
-      <p>{{ titleToDisplay }}</p>
+      <section>
+        <p>{{ titleToDisplay }}</p>
+      </section>
       <p>{{ authorsToDisplay }}</p>
     </article>
   </router-link>

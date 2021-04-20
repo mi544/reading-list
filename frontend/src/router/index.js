@@ -7,7 +7,6 @@ import Contact from '../pages/Contact.vue'
 import Login from '../pages/Login.vue'
 import Register from '../pages/Register.vue'
 import Dashboard from '../pages/Dashboard.vue'
-import ReadingList from '../pages/ReadingList.vue'
 import Books from '../pages/Books.vue'
 import Book from '../pages/Book.vue'
 import NotFound from '../pages/_.vue'
@@ -86,16 +85,6 @@ const routes = [
     component: Dashboard,
     meta: {
       title: 'Dashboard - Book Store',
-      unauthorized: false,
-      authorized: true,
-    },
-  },
-  {
-    path: '/reading-list',
-    name: 'ReadingList',
-    component: ReadingList,
-    meta: {
-      title: 'Reading List - Book Store',
       unauthorized: false,
       authorized: true,
     },
