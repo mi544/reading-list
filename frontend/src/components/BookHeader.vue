@@ -51,7 +51,7 @@ export default {
 
     const logout = async () => {
       try {
-        await logoutAccount(token)
+        await logoutAccount(token.value)
       } catch (err) {
         console.error(err)
       } finally {

@@ -1,7 +1,7 @@
 <template>
   <main v-if="isLoaded" class="flex-grow flex">
     <article
-      class="h-full w-full flex justify-between items-center bg-white border-2"
+      class="py-8 min-h-full w-full flex justify-between items-center bg-white border-2"
     >
       <section class="w-3/12">
         <img
@@ -11,7 +11,7 @@
         />
         <img
           v-else
-          src="@/assets/images/image-not-available-hq.jpg"
+          src="@/assets/images/image-not-available.jpg"
           :alt="`Book Thumbnail of ${bookData.title}`"
         />
       </section>
@@ -121,10 +121,9 @@ export default {
             title: resData.volumeInfo.title,
             authors: resData.volumeInfo.authors,
             categories: resData.volumeInfo.categories,
-            description: resData.volumeInfo.description.replace(
-              /<\/?[pib]>/gi,
-              ''
-            ),
+            description: resData.volumeInfo.description
+              ? resData.volumeInfo.description.replace(/<\/?[pib]>/gi, '')
+              : null,
           }
 
           isLoaded.value = true
