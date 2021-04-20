@@ -3,8 +3,10 @@
     <section class="flex justify-center items-center">
       <p class="text-2xl my-6">Hi {{ fullName }}!</p>
     </section>
-    <section class="flex justify-center items-center">
-      <button class="mx-auto" @click="onBookOrderSave">Save Book Order</button>
+    <section class="flex justify-evenly items-center">
+      <button class="w-4/12" @click="sortBy('title')">Sort by Title</button>
+      <button class="w-4/12" @click="reverseOrder">Reverse order</button>
+      <button class="w-4/12" @click="onBookOrderSave">Save Book Order</button>
     </section>
     <section>
       <p v-if="!booksArr.length">No books added yet</p>
@@ -119,6 +121,21 @@ export default {
       }
     }
 
+    const sortBy = (column) => {
+      if (!booksArr.value.length) return
+      booksArr.value.sort((a, b) => {
+        if (a[column] < b[column]) return -1
+        if (a[column] > b[column]) return +1
+        return 0
+      })
+      console.log(booksArr.value)
+    }
+
+    const reverseOrder = () => {
+      if (!booksArr.value.length) return
+      booksArr.value.reverse()
+    }
+
     return {
       fullName,
       booksArr,
@@ -127,6 +144,8 @@ export default {
       onBookUp,
       onBookDown,
       onBookOrderSave,
+      sortBy,
+      reverseOrder,
     }
   },
 }
