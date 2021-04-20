@@ -1,9 +1,10 @@
 import { ApiClient } from './BaseApiClient.js'
 
 const authServiceClient = new ApiClient({
-  resource: 'http://127.0.0.1:8000/api/auth/',
+  resource: `${import.meta.env.VITE_BACKEND_API_URL}/auth/`,
 })
-
+console.log('OOO!!', import.meta.env.MODE)
+console.log('OOOx2!!', import.meta.env.VITE_BACKEND_API_URL)
 export const registerAccount = async (query) => {
   return await authServiceClient.post('/register', query)
 }

@@ -1,7 +1,7 @@
 import { ApiClient } from './BaseApiClient.js'
 
 const bookServiceClient = new ApiClient({
-  resource: 'http://127.0.0.1:8000/api/',
+  resource: `${import.meta.env.VITE_BACKEND_API_URL}/`,
 })
 
 export const getAllBooks = async (token) => {

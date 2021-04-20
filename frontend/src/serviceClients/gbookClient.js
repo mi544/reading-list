@@ -1,7 +1,7 @@
 import { ApiClient } from './BaseApiClient.js'
 
 const gbookServiceClient = new ApiClient({
-  resource: 'http://127.0.0.1:8000/api/gbook/',
+  resource: `${import.meta.env.VITE_BACKEND_API_URL}/gbook/`,
 })
 
 export const getByGeneralQuery = async (query, page = 0) => {
