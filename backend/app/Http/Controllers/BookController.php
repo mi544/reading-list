@@ -25,18 +25,6 @@ class BookController extends Controller
         $books = $user->books()->orderBy('order', 'ASC')->get();
 
         return response()->json($books);
-
-        // $users = User::with(['posts' => function ($query) {
-        //     $query->orderBy('created_at', 'desc');
-        // }])->get();
-
-        // $books = User::with(['books' => function ($query) {
-        //     $query->orderBy('created_at', 'desc');
-        // }])->get();
-
-        // return response()->json($books);
-
-        // return Book::orderBy('order', 'DESC')->get();
     }
 
     /**
@@ -104,6 +92,45 @@ class BookController extends Controller
         ]);
 
         return response()->json($new_book);
+    }
+
+    /**
+     * Sets a new order of books in the database.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function setOrder(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            '*.gid' => ['required', 'string', 'min:1', 'max:100'],
+            '*.order' => ['required', 'int', 'min:1'],
+        ]);
+
+        if ($validator->fails()) {
+            $response_data = [
+                'status' => 'validation_error',
+                'errors' => $validator->errors(),
+            ];
+
+            return response()->json($response_data, 400);
+        }
+
+        $user_id = Auth::user()->id;
+
+        $user = User::find($user_id);
+
+        $book_data = request()->all();
+
+        for ($i = 0; $i < count($book_data); $i += 1) {
+            $book_found = $user->books()->where('gid', $book_data[$i]['gid'])->first();
+            if ($book_found) {
+                $book_found->order = $book_data[$i]['order'];
+                $book_found->save();
+            }
+        }
+
+        return response()->json($book_data);
     }
 
     /**

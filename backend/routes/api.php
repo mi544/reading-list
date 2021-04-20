@@ -55,7 +55,12 @@ Route::group(['middleware' => ['auth:api']], function () {
         }
     );
 
-    Route::get('/books', [BookController::class, 'index']);
+    Route::prefix('/books')->group(
+        function () {
+            Route::get('/', [BookController::class, 'index']);
+            Route::post('/order', [BookController::class, 'setOrder']);
+        }
+    );
 
     Route::prefix('/book')->group(
         function () {
