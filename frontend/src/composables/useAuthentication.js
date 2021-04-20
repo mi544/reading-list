@@ -2,14 +2,14 @@ import { ref } from 'vue'
 import { getAccountInfo } from '@/serviceClients/authClient.js'
 
 const isAuthenticated = ref(null)
-const name = ref(null)
+const fullName = ref(null)
 const username = ref(null)
 const token = ref(null)
 
 const updateUserData = (userData) => {
   isAuthenticated.value = true
   window.localStorage.setItem('isAuthenticated', JSON.stringify(true))
-  name.value = userData.name
+  fullName.value = userData.name
   username.value = userData.username
   token.value = userData.token
   window.localStorage.setItem('userData', JSON.stringify(userData))
@@ -18,7 +18,7 @@ const updateUserData = (userData) => {
 const resetAuth = () => {
   isAuthenticated.value = false
   window.localStorage.setItem('isAuthenticated', JSON.stringify(false))
-  name.value = null
+  fullName.value = null
   username.value = null
   token.value = null
   window.localStorage.removeItem('userData')
@@ -33,7 +33,7 @@ const loadDataFromStorage = () => {
   }
 
   const userData = JSON.parse(window.localStorage.getItem('userData'))
-  name.value = userData.name
+  fullName.value = userData.name
   username.value = userData.username
   token.value = userData.token
   isAuthenticated.value = true
@@ -63,7 +63,7 @@ const checkIsTokenActive = async () => {
 
 export {
   isAuthenticated,
-  name,
+  fullName,
   username,
   token,
   updateUserData,

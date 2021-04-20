@@ -29,6 +29,11 @@
             {{ category }}
           </p>
         </section>
+        <section v-if="bookData.description">
+          <p>
+            {{ bookData.description }}
+          </p>
+        </section>
       </section>
       <section v-if="!isAdded" class="w-3/12 flex flex-col">
         <button @click="onBookAdd">add button</button>
@@ -116,6 +121,10 @@ export default {
             title: resData.volumeInfo.title,
             authors: resData.volumeInfo.authors,
             categories: resData.volumeInfo.categories,
+            description: resData.volumeInfo.description.replace(
+              /<\/?[pib]>/gi,
+              ''
+            ),
           }
 
           isLoaded.value = true

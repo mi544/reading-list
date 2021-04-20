@@ -1,6 +1,9 @@
 <template>
   <main v-if="isLoaded" class="flex-grow">
     <section class="flex justify-center items-center">
+      <p class="text-2xl my-6">Hi {{ fullName }}!</p>
+    </section>
+    <section class="flex justify-center items-center">
       <button class="mx-auto" @click="onBookOrderSave">Save Book Order</button>
     </section>
     <section>
@@ -27,7 +30,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import { token } from '@/composables/useAuthentication.js'
+import { token, fullName } from '@/composables/useAuthentication.js'
 import { getAllBooks, setBookOrder } from '@/serviceClients/bookClient.js'
 import BookDisplayAsLine from '@C/BookDisplayAsLine.vue'
 
@@ -117,6 +120,7 @@ export default {
     }
 
     return {
+      fullName,
       booksArr,
       isLoaded,
       onBookDelete,
