@@ -1,0 +1,13 @@
+server {
+    listen 80;
+
+    root /var/www/html/bookstore.personal-projects.space;
+    index index.html;
+
+    server_name bookstore.personal-projects.space www.bookstore.personal-projects.space;
+
+    location / {
+        #https://router.vuejs.org/guide/essentials/history-mode.html#example-server-configurations
+        try_files $uri $uri/ /index.html;
+    }
+}
