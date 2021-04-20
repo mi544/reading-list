@@ -28,7 +28,7 @@
     <div class="py-12 flex">
       <p>
         No account yet?
-        <link-item to="/register" class="underline">Register</link-item>
+        <link-item :to="redirectObject" class="underline"> Register </link-item>
       </p>
     </div>
   </main>
@@ -47,8 +47,23 @@ import Spinner from '@C/Spinner.vue'
 export default {
   name: 'Login',
   components: { ValidatedInput, LinkItem, BookButton, Spinner },
-  setup() {
+  props: {
+    redirectAfterAuth: { type: String, default: () => null },
+  },
+  setup(props) {
     const router = useRouter()
+
+    const redirectObject = computed(() => {
+      if (props.redirectAfterAuth) {
+        return {
+          name: 'Register',
+          query: { r: props.redirectAfterAuth },
+        }
+      }
+      return {
+        name: 'Register',
+      }
+    })
 
     const isLoading = ref(false)
     const usernameInput = ref('')
@@ -82,6 +97,10 @@ export default {
 
         updateUserData(userData)
 
+        if (props.redirectAfterAuth) {
+          router.push(props.redirectAfterAuth)
+          return
+        }
         router.push('/dashboard')
       } catch (err) {
         console.error(err)
@@ -91,6 +110,7 @@ export default {
     }
 
     return {
+      redirectObject,
       isLoading,
       inputsValid,
       usernameInput,

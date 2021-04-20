@@ -9,24 +9,24 @@ export const getAllBooks = async (token) => {
   return await bookServiceClient.get('/books', config)
 }
 
-export const getBookById = async (bookId, token) => {
+export const getBookByGid = async (gid, token) => {
   const config = { headers: { Authorization: `Bearer ${token}` } }
-  return await bookServiceClient.get(`/book/${bookId}`, config)
+  return await bookServiceClient.get(`/book/${gid}`, config)
 }
 
 export const storeBook = async (gid, token) => {
   const config = { headers: { Authorization: `Bearer ${token}` } }
-  const query = { g_book_id: gid }
+  const query = { gid: gid }
   return await bookServiceClient.post('/book', query, config)
 }
 
-export const toggleBookFinishedState = async (bookId, finishedState, token) => {
+export const toggleBookFinishedState = async (gid, finishedState, token) => {
   const config = { headers: { Authorization: `Bearer ${token}` } }
-  const query = { book_id: bookId, finished: finishedState }
-  return await bookServiceClient.put('/book', query, config)
+  const query = { gid: gid, finished: finishedState }
+  return await bookServiceClient.update('/book', query, config)
 }
 
-export const deleteBook = async (bookId, token) => {
+export const deleteBook = async (gid, token) => {
   const config = { headers: { Authorization: `Bearer ${token}` } }
-  return await bookServiceClient.delete(`/book/${bookId}`, config)
+  return await bookServiceClient.delete(`/book/${gid}`, config)
 }

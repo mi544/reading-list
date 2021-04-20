@@ -14,6 +14,7 @@ import NotFound from '../pages/_.vue'
 const routes = [
   {
     path: '/',
+    name: 'Index',
     component: Index,
     meta: {
       title: 'Book Store',
@@ -23,6 +24,7 @@ const routes = [
   },
   {
     path: '/about',
+    name: 'About',
     component: About,
     meta: {
       title: 'About - Book Store',
@@ -32,6 +34,7 @@ const routes = [
   },
   {
     path: '/contact',
+    name: 'Contact',
     component: Contact,
     meta: {
       title: 'Contact - Book Store',
@@ -41,24 +44,33 @@ const routes = [
   },
   {
     path: '/login',
+    name: 'Login',
     component: Login,
     meta: {
       title: 'Login - Book Store',
       unauthorized: true,
       authorized: false,
     },
+    props: (route) => ({
+      redirectAfterAuth: route.query.r || null,
+    }),
   },
   {
     path: '/register',
+    name: 'Register',
     component: Register,
     meta: {
       title: 'Register - Book Store',
       unauthorized: true,
       authorized: false,
     },
+    props: (route) => ({
+      redirectAfterAuth: route.query.r || null,
+    }),
   },
   {
     path: '/dashboard',
+    name: 'Dashboard',
     component: Dashboard,
     meta: {
       title: 'Dashboard - Book Store',
@@ -68,6 +80,7 @@ const routes = [
   },
   {
     path: '/reading-list',
+    name: 'ReadingList',
     component: ReadingList,
     meta: {
       title: 'Reading List - Book Store',
@@ -77,6 +90,7 @@ const routes = [
   },
   {
     path: '/books',
+    name: 'Books',
     component: Books,
     meta: {
       title: 'Books - Book Store',
@@ -91,15 +105,20 @@ const routes = [
   },
   {
     path: '/book/:gbook_id',
+    name: 'Book',
     component: Book,
     meta: {
       title: 'Book - Book Store',
       unauthorized: true,
       authorized: true,
     },
+    props: (route) => ({
+      gid: route.params.gbook_id || null,
+    }),
   },
   {
     path: '/:pathMatch(.*)*',
+    name: 'NotFound',
     component: NotFound,
     meta: {
       title: '404 Not Found - Book Store',

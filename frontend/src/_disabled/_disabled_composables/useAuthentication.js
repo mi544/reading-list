@@ -39,8 +39,6 @@ export default function useAuthentication() {
     token.value = userData.token
     isAuthenticated.value = true
 
-    console.log('made it past, isAuthenticated', isAuthenticated.value)
-
     return true
   }
 
