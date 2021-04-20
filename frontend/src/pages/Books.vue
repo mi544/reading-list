@@ -45,7 +45,10 @@ export default {
       watchEffect(async () => {
         try {
           let res = null
-          if (!props.searchType) return
+          if (!props.searchType) {
+            booksArr.value = []
+            return
+          }
           switch (props.searchType) {
             case 'generalsearch':
               res = await getByGeneralQuery(props.query, props.page)

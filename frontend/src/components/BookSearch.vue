@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 
 import BookButton from '@C/BookButton.vue'
@@ -76,9 +76,13 @@ export default {
     const searchPage = ref(1)
 
     onMounted(() => {
-      if (props.qSearchType) searchType.value = props.qSearchType
-      if (props.qSearchQuery) searchField.value = props.qSearchQuery
-      if (props.qPage) searchPage.value = props.qPage + 1
+      watchEffect(() => {
+        if (props.qSearchType) searchType.value = props.qSearchType
+        if (props.qSearchQuery) searchField.value = props.qSearchQuery
+
+        if (props.qPage) searchPage.value = props.qPage + 1
+        else searchPage.value = 1
+      })
     })
 
     const onNextPage = () => {
