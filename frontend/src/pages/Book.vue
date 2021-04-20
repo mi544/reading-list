@@ -1,6 +1,8 @@
 <template>
   <main v-if="isLoaded" class="flex-grow flex">
-    <article class="h-full flex justify-between items-center bg-white border-2">
+    <article
+      class="h-full w-full flex justify-between items-center bg-white border-2"
+    >
       <section class="w-3/12">
         <img
           v-if="bookData.thumbnailUrl"

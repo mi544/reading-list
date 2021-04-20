@@ -40,6 +40,8 @@
         complete button
       </button>
       <button v-else @click="onBookUnfinish">uncomplete button</button>
+      <button @click="onBookUp">up</button>
+      <button @click="onBookDown">down</button>
     </section>
   </article>
 </template>
@@ -63,13 +65,15 @@ export default {
     subtitle: { type: String, default: () => null },
     categories: { type: Array, default: () => null },
   },
-  setup(props) {
+  emits: ['book-up', 'book-down', 'book-delete'],
+  setup(props, { emit }) {
     const isDeleted = ref(false)
     const isFinished = ref(props.finished)
 
     const onBookDelete = async () => {
       try {
         await deleteBook(props.gid, token.value)
+        emit('book-delete', props.gid)
         isDeleted.value = true
       } catch (err) {
         console.error(err)
@@ -94,12 +98,22 @@ export default {
       }
     }
 
+    const onBookUp = () => {
+      emit('book-up', props.gid)
+    }
+
+    const onBookDown = () => {
+      emit('book-down', props.gid)
+    }
+
     return {
       isDeleted,
       isFinished,
       onBookDelete,
       onBookFinish,
       onBookUnfinish,
+      onBookUp,
+      onBookDown,
     }
   },
 }

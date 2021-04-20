@@ -20,6 +20,12 @@ export const storeBook = async (gid, token) => {
   return await bookServiceClient.post('/book', query, config)
 }
 
+export const setBookOrder = async (bookOrderArr, token) => {
+  const config = { headers: { Authorization: `Bearer ${token}` } }
+  console.log(config)
+  return await bookServiceClient.post('/books/order', bookOrderArr, config)
+}
+
 export const toggleBookFinishedState = async (gid, finishedState, token) => {
   const config = { headers: { Authorization: `Bearer ${token}` } }
   const query = { gid: gid, finished: finishedState }

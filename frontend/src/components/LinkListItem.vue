@@ -10,7 +10,7 @@
 export default {
   name: 'LinkListItem',
   props: {
-    to: { type: String, required: true },
+    to: { type: [String, Object], required: true },
   },
 }
 </script>
