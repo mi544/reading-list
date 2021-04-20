@@ -87,6 +87,7 @@ class BookController extends Controller
             'subtitle' =>  isset($book_data['volumeInfo']['subtitle']) ? $book_data['volumeInfo']['subtitle'] : null,
             'authors' =>  isset($book_data['volumeInfo']['authors']) ? json_encode($book_data['volumeInfo']['authors']) : null,
             'categories' =>  isset($book_data['volumeInfo']['categories']) ? json_encode($book_data['volumeInfo']['categories']) : null,
+            'description' =>  isset($book_data['volumeInfo']['description']) ? json_encode($book_data['volumeInfo']['description']) : null,
             'order' =>  $last_book_order_num + 1,
             'user_id' => $user_id,
         ]);

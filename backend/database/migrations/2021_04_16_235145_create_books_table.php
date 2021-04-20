@@ -21,6 +21,7 @@ class CreateBooksTable extends Migration
             $table->string('subtitle')->nullable();
             $table->string('authors')->nullable();
             $table->string('categories')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('finished')->default(false);
             $table->timestamp('finished_at')->nullable();
             $table->unsignedInteger('order');

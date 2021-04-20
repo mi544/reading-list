@@ -21,6 +21,8 @@ class Book extends Model
         'title',
         'subtitle',
         'authors',
+        'categories',
+        'description',
         'order',
         'user_id',
     ];
