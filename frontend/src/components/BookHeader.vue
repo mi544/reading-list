@@ -3,7 +3,10 @@
     class="h-32 bg-primary-200 flex justify-between items-center border-black border-b-2 rounded-b-md shadow-md"
   >
     <div class="h-24 w-3/12">
-      <router-link to="/" class="h-full w-full p-2 flex items-center shadow-lg">
+      <router-link
+        :to="{ name: 'Index' }"
+        class="h-full w-full p-2 flex items-center shadow-lg"
+      >
         <img
           src="@/assets/images/open-book.svg"
           alt="Open Book Icon"
@@ -15,12 +18,12 @@
     <div class="w-4/12"></div>
     <nav class="w-5/12 text-xl">
       <ul class="flex justify-evenly items-center">
-        <link-list-item to="/books">Explore Books</link-list-item>
+        <link-list-item :to="{ name: 'Books' }">Explore Books</link-list-item>
         <div class="w-1/12"></div>
-        <link-list-item v-if="isAuthenticated" to="/dashboard">
+        <link-list-item v-if="isAuthenticated" :to="{ name: 'Dashboard' }">
           Dashboard
         </link-list-item>
-        <link-list-item v-else to="/login">Login</link-list-item>
+        <link-list-item v-else :to="{ name: 'Login' }">Login</link-list-item>
         <book-button v-if="isAuthenticated" @click="logout" small red>
           Logout
         </book-button>

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { isAuthenticated } from '@/composables/useAuthentication.js'
 import Index from '../pages/Index.vue'
+import Love from '../pages/Love.vue'
 import About from '../pages/About.vue'
 import Contact from '../pages/Contact.vue'
 import Login from '../pages/Login.vue'
@@ -20,6 +21,17 @@ const routes = [
       title: 'Book Store',
       unauthorized: true,
       authorized: true,
+    },
+  },
+  {
+    path: '/love',
+    name: 'Love',
+    component: Love,
+    meta: {
+      title: 'Love <3',
+      unauthorized: true,
+      authorized: true,
+      love: true,
     },
   },
   {
