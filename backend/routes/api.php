@@ -59,11 +59,10 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     Route::prefix('/book')->group(
         function () {
-            Route::get('/{book_id}', [BookController::class, 'show']);
-            Route::get('/gid/{gid}', [BookController::class, 'showByGid']);
+            Route::get('/{gid}', [BookController::class, 'show']);
             Route::post('/', [BookController::class, 'store']);
             Route::put('/', [BookController::class, 'update']);
-            Route::delete('/{book_id}', [BookController::class, 'destroy']);
+            Route::delete('/{gid}', [BookController::class, 'destroy']);
         }
     );
 

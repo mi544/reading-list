@@ -48,7 +48,7 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'g_book_id' => ['required', 'string', 'min:1', 'max:100'],
+            'gid' => ['required', 'string', 'min:1', 'max:100'],
         ]);
 
         if ($validator->fails()) {
@@ -63,23 +63,11 @@ class BookController extends Controller
         $user_id = Auth::user()->id;
 
         $user = User::find($user_id);
-        $last_book = $user->books()->orderBy('order', 'DESC')->first();
-        // if no last book found (no books exist yet), set order to 1
-        $last_book_order_num = $last_book ? $last_book->order : 0;
 
-        $book_id = request()->only('g_book_id')['g_book_id'];
-        $book_data = GAPIClient::getBookById($book_id);
-
-        if (!$book_data) {
-            $response_data = [
-                'status' => 'error',
-            ];
-
-            return response()->json($response_data, 500);
-        }
+        $book_id = request()->only(['gid']);
 
         // see if a book with that gid already exists for that user
-        $book_found = $user->books()->where('g_book_id', $book_data['id'])->first();
+        $book_found = $user->books()->where('gid', $book_id)->first();
 
         // if a book with that id exists, don't add it
         if ($book_found) {
@@ -90,8 +78,22 @@ class BookController extends Controller
             return response()->json($response_data, 303);
         }
 
+        $last_book = $user->books()->orderBy('order', 'DESC')->first();
+        // if no last book found (no books exist yet), set order to 1
+        $last_book_order_num = $last_book ? $last_book->order : 0;
+
+        $book_data = GAPIClient::getBookById($book_id['gid']);
+
+        if (!$book_data) {
+            $response_data = [
+                'status' => 'error',
+            ];
+
+            return response()->json($response_data, 500);
+        }
+
         $new_book = Book::create([
-            'g_book_id' => $book_data['id'],
+            'gid' => $book_data['id'],
             'thumbnail_url' => isset($book_data['volumeInfo']['imageLinks']['thumbnail']) ? $book_data['volumeInfo']['imageLinks']['thumbnail'] : null,
             'title' =>  $book_data['volumeInfo']['title'],
             'subtitle' =>  isset($book_data['volumeInfo']['subtitle']) ? $book_data['volumeInfo']['subtitle'] : null,
@@ -105,52 +107,12 @@ class BookController extends Controller
     }
 
     /**
-     * Show a specific book (by id).
+     * Show a specific book if exists (by gid).
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($book_id)
-    {
-        $book_id_int = (int) $book_id;
-
-        $validator = Validator::make(['book_id_int' => $book_id_int], [
-            'book_id_int' => ['required', 'int', 'min:1']
-        ]);
-
-        if ($validator->fails()) {
-            $response_data = [
-                'status' => 'validation_error',
-                'errors' => $validator->errors(),
-            ];
-
-            return response()->json($response_data, 400);
-        }
-
-        $user_id = Auth::user()->id;
-
-        $user = User::find($user_id);
-        $book_found = $user->books()->where('id', $book_id_int)->first();
-
-        if (!$book_found) {
-            $response_data = [
-                'status' => 'error_not_found',
-            ];
-
-            return response()->json($response_data, 404);
-        }
-
-        return response()->json($book_found);
-    }
-
-
-    /**
-     * Show a specific book (by gid).
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showByGid($gid)
+    public function show($gid)
     {
         $validator = Validator::make(['gid' => $gid], [
             'gid' => ['required', 'string', 'min:1', 'max:100']
@@ -168,7 +130,7 @@ class BookController extends Controller
         $user_id = Auth::user()->id;
 
         $user = User::find($user_id);
-        $book_found = $user->books()->where('g_book_id', $gid)->first();
+        $book_found = $user->books()->where('gid', $gid)->first();
 
         if (!$book_found) {
             $response_data = [
@@ -191,7 +153,7 @@ class BookController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'book_id' => ['required', 'int', 'min:1'],
+            'gid' => ['required', 'string', 'min:1', 'max:100'],
             'finished' => ['required', 'boolean'],
         ]);
 
@@ -204,11 +166,11 @@ class BookController extends Controller
             return response()->json($response_data, 400);
         }
 
-        $book_data = $request->only(['book_id', 'finished']);
+        $book_data = $request->only(['gid', 'finished']);
 
         $user_id = Auth::user()->id;
         $user = User::find($user_id);
-        $book_found = $user->books()->where('id', $book_data['book_id'])->first();
+        $book_found = $user->books()->where('gid', $book_data['gid'])->first();
 
         if (!$book_found) {
             $response_data = [
@@ -219,7 +181,7 @@ class BookController extends Controller
         }
 
         $book_found->finished = $book_data['finished'];
-        $book_found->finished_at = Carbon::now();
+        $book_found->finished_at = $book_data['finished'] ? Carbon::now() : null;
         $book_found->save();
 
         return response()->json($book_found);
@@ -231,12 +193,10 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($book_id)
+    public function destroy($gid)
     {
-        $book_id_int = (int) $book_id;
-
-        $validator = Validator::make(['book_id_int' => $book_id_int], [
-            'book_id_int' => ['required', 'int', 'min:1']
+        $validator = Validator::make(['gid' => $gid], [
+            'gid' => ['required', 'string', 'min:1', 'max:100']
         ]);
 
         if ($validator->fails()) {
@@ -251,7 +211,7 @@ class BookController extends Controller
         $user_id = Auth::user()->id;
 
         $user = User::find($user_id);
-        $book_found = $user->books()->where('id', $book_id_int)->first();
+        $book_found = $user->books()->where('gid', $gid)->first();
 
         if (!$book_found) {
             $response_data = [

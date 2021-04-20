@@ -16,7 +16,7 @@ class Book extends Model
      * @var array
      */
     protected $fillable = [
-        'g_book_id',
+        'gid',
         'thumbnail_url',
         'title',
         'subtitle',
