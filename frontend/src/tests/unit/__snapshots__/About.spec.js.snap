@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Index matches snapshot 1`] = `
+<main
+  class="flex-grow flex items-center justify-center text-2xl"
+>
+   So here we are... Home page! 
+</main>
+`;
