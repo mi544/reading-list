@@ -16,6 +16,7 @@ You can access the deployed version of Reading List here:
 - [Tests](#Tests)
 - [Questions](#Questions)
 - [Authors](#Authors)
+- [Attributions](#Attribution)
 
 ## Description
 
@@ -66,7 +67,7 @@ yarn build
 
 ---
 
-The app is currently deployed to an EC2 AWS VPS with Nginx statically serving both front-end and back-end. All config files can be found in `/nginx` directory.
+The app is currently deployed to an EC2 AWS VPS with Nginx serving both front-end (static files) and back-end (Laravel - PHP). All config files can be found in `/nginx` directory.
 
 ## Usage
 
@@ -104,6 +105,7 @@ sd32@pm.me
 
 Maksim Verkhoturov
 
-## Attribution
+## Attributions
 
-- Book icon used in the header was made by [Zlatko Najdenovski](https://www.flaticon.com/authors/zlatko-najdenovski) from [flaticon.com](https://flaticon.com/)
+- Book icon used in the header by [Zlatko Najdenovski](https://www.flaticon.com/authors/zlatko-najdenovski) from [flaticon.com](https://flaticon.com/)
+- Library photo by [Leh-a](https://commons.wikimedia.org/wiki/File:DSC_0187-2.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0), via Wikimedia Commons
