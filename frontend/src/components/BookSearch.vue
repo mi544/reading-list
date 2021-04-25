@@ -46,7 +46,7 @@
           Previous Page
         </book-button>
         <div>
-          <p class="w-max px-2 py-1 bg-success-100 text-xl">
+          <p class="w-max px-2 py-1 bg-success-100 text-xl rounded-md">
             Page: {{ searchPage }}
           </p>
         </div>

@@ -21,14 +21,14 @@
         <p
           v-if="isFinished"
           long
-          class="p-2 mx-2 md:mx-0 rounded-md bg-success-500"
+          class="p-2 mx-2 md:mx-0 rounded-md bg-success-500 text-center"
         >
           Book is finished!
         </p>
         <p
           v-if="!isFinished"
           long
-          class="p-2 mx-2 md:mx-0 rounded-md bg-warning-500"
+          class="p-2 mx-2 md:mx-0 rounded-md bg-warning-500 text-center"
         >
           Book is not finished!
         </p>
@@ -90,7 +90,7 @@
       </div>
     </article>
   </main>
-  <div v-else class="flex-grow">Spinner</div>
+  <div v-else class="flex-grow">Loading...</div>
 </template>
 
 <script>

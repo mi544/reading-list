@@ -1,12 +1,29 @@
 <template>
-  <main v-if="isLoaded" class="flex-grow">
+  <main v-if="isLoaded" class="flex-grow mb-6">
     <section class="flex justify-center items-center">
-      <p class="text-2xl my-6">Hi {{ fullName }}!</p>
+      <card class="w-3/4 sm:w-2/4 md:w-1/4 my-2 text-center">
+        <p class="text-2xl my-6">Hi, {{ fullName }}!</p>
+      </card>
     </section>
-    <section class="flex justify-evenly items-center">
-      <button class="w-4/12" @click="sortBy('title')">Sort by Title</button>
-      <button class="w-4/12" @click="reverseOrder">Reverse order</button>
-      <button class="w-4/12" @click="onBookOrderSave">Save Book Order</button>
+    <section class="flex justify-evenly items-stretch">
+      <book-button
+        class="w-4/12 bg-info-300 rounded-l-none rounded-b-none"
+        @click="sortBy('title')"
+      >
+        Sort by Title
+      </book-button>
+      <book-button
+        class="w-4/12 bg-warning-300 rounded-b-none"
+        @click="reverseOrder"
+      >
+        Reverse order
+      </book-button>
+      <book-button
+        class="w-4/12 bg-success-300 rounded-r-none rounded-b-none"
+        @click="onBookOrderSave"
+      >
+        Save Book Order
+      </book-button>
     </section>
     <section>
       <p v-if="!booksArr.length">No books added yet</p>
@@ -27,7 +44,7 @@
       />
     </section>
   </main>
-  <p v-else class="flex-grow">Spinner</p>
+  <div v-else class="flex-grow">Loading...</div>
 </template>
 
 <script>
@@ -35,10 +52,12 @@ import { ref, onMounted } from 'vue'
 import { token, fullName } from '@/composables/useAuthentication.js'
 import { getAllBooks, setBookOrder } from '@/serviceClients/bookClient.js'
 import BookDisplayAsLine from '@C/BookDisplayAsLine.vue'
+import BookButton from '@C/BookButton.vue'
+import Card from '@C/Card.vue'
 
 export default {
   name: 'Dashboard',
-  components: { BookDisplayAsLine },
+  components: { BookDisplayAsLine, BookButton, Card },
   setup() {
     const isLoaded = ref(false)
     const booksArr = ref([])

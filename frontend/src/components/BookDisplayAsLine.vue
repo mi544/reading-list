@@ -1,10 +1,10 @@
 <template>
   <article
     v-if="!isDeleted"
-    class="my-1 flex justify-evenly items-stretch bg-white border-2"
+    class="mb-1 py-1 flex justify-evenly items-stretch bg-white border-2"
   >
     <div class="w-3/12">
-      <router-link :to="`/book/${gid}`">
+      <router-link :to="{ path: `/book/${gid}` }">
         <img
           v-if="thumbnailUrl"
           :src="thumbnailUrl"
@@ -17,32 +17,58 @@
         />
       </router-link>
     </div>
-    <section class="w-6/12">
+    <div class="w-6/12 pl-1 sm:pl-0 flex flex-col justify-around">
       <section>
-        <router-link :to="`/book/${gid}`">
-          <p>{{ title }}</p>
+        <router-link :to="{ path: `/book/${gid}` }">
+          <p class="mb-4 text-base sm:text-xl">{{ title }}</p>
         </router-link>
-      </section>
-      <section>
-        <p v-if="!authors">No authors specified</p>
-        <p v-for="author in authors" :key="author">{{ author }}</p>
-      </section>
-      <section>
-        <p v-if="!categories">No categories specified</p>
-        <p v-for="category in categories" :key="category">
-          {{ category }}
+        <p v-if="!authors" class="text-base sm:text-lg">No authors specified</p>
+        <p v-for="author in authors" :key="author" class="text-base sm:text-lg">
+          {{ author }}
         </p>
       </section>
-    </section>
-    <section class="w-3/12 flex flex-col">
-      <button @click="onBookDelete">delete button</button>
-      <button v-if="!isFinished" @click="onBookFinish">
-        complete button
-      </button>
-      <button v-else @click="onBookUnfinish">uncomplete button</button>
-      <button @click="onBookUp">up</button>
-      <button @click="onBookDown">down</button>
-    </section>
+      <section class="sm:w-3/4 md:w-2/4 flex justify-around sm:justify-between">
+        <book-button class="w-12 md:w-auto text-center" @click="onBookUp">
+          &and;
+        </book-button>
+        <book-button class="w-12 md:w-auto text-center" @click="onBookDown">
+          &or;
+        </book-button>
+      </section>
+    </div>
+    <div class="min-h-full w-3/12 flex flex-col justify-evenly items-center">
+      <book-button class="bg-danger-500" @click="onBookDelete">
+        Delete
+      </book-button>
+      <p
+        v-if="isFinished"
+        long
+        class="p-2 my-1 rounded-md bg-success-500 text-center"
+      >
+        Book is finished!
+      </p>
+      <p
+        v-if="!isFinished"
+        long
+        class="p-2 my-1 rounded-md bg-warning-500 text-center"
+      >
+        Book is not finished!
+      </p>
+      <book-button
+        v-if="isFinished"
+        class="bg-warning-500"
+        @click="onBookUnfinish"
+      >
+        &gt;Not finished?
+      </book-button>
+      <book-button
+        v-if="!isFinished"
+        class="bg-success-500"
+        @click="onBookFinish"
+      >
+        &gt;Finished?
+      </book-button>
+    </div>
   </article>
 </template>
 
@@ -53,9 +79,11 @@ import {
   toggleBookFinishedState,
   deleteBook,
 } from '@/serviceClients/bookClient.js'
+import BookButton from '@C/BookButton.vue'
 
 export default {
   name: 'BookDisplayAsLine',
+  components: { BookButton },
   props: {
     gid: { type: String, required: true },
     finished: { type: Number, required: true },
