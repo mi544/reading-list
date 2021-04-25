@@ -1,6 +1,6 @@
 <template>
   <div class="h-32 w-full flex flex-col">
-    <label for="username">{{ name }}</label>
+    <label :for="name.toLowerCase()">{{ name }}</label>
     <input
       :id="name.toLowerCase()"
       v-model="input"

@@ -7,7 +7,7 @@
         <img
           src="@/assets/images/library.jpg"
           alt="Old Library Photo"
-          class="h-full"
+          class="min-h-full"
         />
       </div>
       <p class="text-center mt-1">

@@ -127,6 +127,11 @@ export default {
     const isFinished = ref(false)
 
     onMounted(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      })
       watchEffect(async () => {
         try {
           const gidRes = await getBookByGid(props.gid, token.value)
