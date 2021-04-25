@@ -5,7 +5,7 @@
       :q-search-query="query"
       :q-page="page"
     />
-    <section class="flex flex-wrap justify-evenly">
+    <section class="my-4 flex flex-wrap justify-evenly">
       <book-display
         v-for="book in booksArr"
         :key="book.gid"

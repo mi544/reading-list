@@ -1,7 +1,7 @@
 <template>
-  <router-link :to="`/book/${gid}`">
+  <router-link :to="{ path: `/book/${gid}` }">
     <article
-      class="my-1 h-96 w-96 flex flex-col justify-center items-center bg-white border-2"
+      class="sm:h-96 w-56 sm:w-96 my-2 py-4 sm:py-0 flex flex-col justify-center items-center bg-white border-2"
     >
       <div class="h-4/6">
         <img
@@ -15,10 +15,10 @@
           :alt="`Book Thumbnail of ${title}`"
         />
       </div>
-      <section>
-        <p>{{ titleToDisplay }}</p>
+      <section class="w-10/12 sm:w-auto">
+        <p class="mt-5 mb-0.5">{{ titleToDisplay }}</p>
+        <p class="my-0.5">{{ authorsToDisplay }}</p>
       </section>
-      <p>{{ authorsToDisplay }}</p>
     </article>
   </router-link>
 </template>

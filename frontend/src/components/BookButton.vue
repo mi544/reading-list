@@ -2,7 +2,7 @@
   <button
     :type="type"
     :class="[
-      small ? 'p-2' : 'py-4 px-10',
+      small ? 'p-2' : 'py-2 px-2 xs:py-3 xs:px-4 sm:py-4 sm:px-10',
       red ? 'bg-danger-300' : 'bg-info-400',
       rounded ? 'rounded-xl' : '',
       'disabled:opacity-50',

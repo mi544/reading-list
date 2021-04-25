@@ -1,50 +1,93 @@
 <template>
-  <main v-if="isLoaded" class="flex-grow flex">
-    <article
-      class="py-8 min-h-full w-full flex justify-between items-center bg-white border-2"
+  <main v-if="isLoaded" class="flex-grow bg-white border-4">
+    <section
+      class="py-2 md:py-0 md:fixed md:right-12 md:top-1/3 md:h-72 md:w-48"
     >
-      <section class="w-3/12">
-        <img
-          v-if="bookData.thumbnailUrl"
-          :src="bookData.thumbnailUrl"
-          :alt="`Book Thumbnail of ${bookData.title}`"
-        />
-        <img
-          v-else
-          src="@/assets/images/image-not-available.jpg"
-          :alt="`Book Thumbnail of ${bookData.title}`"
-        />
-      </section>
-      <section class="w-6/12">
-        <section>
-          <p>{{ bookData.title }}</p>
-        </section>
-        <section>
-          <p v-if="!bookData.authors">No authors specified</p>
-          <p v-for="author in bookData.authors" :key="author">{{ author }}</p>
-        </section>
-        <section>
-          <p v-if="!bookData.categories">No categories specified</p>
-          <p v-for="category in bookData.categories" :key="category">
-            {{ category }}
-          </p>
-        </section>
-        <section v-if="bookData.description">
-          <p>
-            {{ bookData.description }}
-          </p>
-        </section>
-      </section>
-      <section v-if="!isAdded" class="w-3/12 flex flex-col">
-        <button @click="onBookAdd">add button</button>
-      </section>
-      <section v-else class="w-3/12 flex flex-col">
-        <button @click="onBookDelete">delete button</button>
-        <button v-if="!isFinished" @click="onBookFinish">
-          complete button
+      <div
+        v-if="!isAdded"
+        class="min-h-full flex flex-row md:flex-col justify-center items-center"
+      >
+        <button @click="onBookAdd">
+          <text-icon>Add</text-icon>
         </button>
-        <button v-else @click="onBookUnfinish">uncomplete button</button>
+      </div>
+      <div
+        v-else
+        class="min-h-full flex flex-row md:flex-col justify-evenly items-center"
+      >
+        <button @click="onBookDelete">
+          <text-icon class="bg-danger-500">Delete</text-icon>
+        </button>
+        <p
+          v-if="isFinished"
+          long
+          class="p-2 mx-2 md:mx-0 rounded-md bg-success-500"
+        >
+          Book is finished!
+        </p>
+        <p
+          v-if="!isFinished"
+          long
+          class="p-2 mx-2 md:mx-0 rounded-md bg-warning-500"
+        >
+          Book is not finished!
+        </p>
+        <button v-if="isFinished" @click="onBookUnfinish">
+          <text-icon class="bg-warning-500">&gt;Not finished?</text-icon>
+        </button>
+        <button v-if="!isFinished" @click="onBookFinish">
+          <text-icon class="bg-success-500">&gt;Finished?</text-icon>
+        </button>
+      </div>
+    </section>
+    <article class="mb-12">
+      <section class="px-4 flex flex-col items-center">
+        <h2 class="mt-8 mb-5 text-4xl">{{ bookData.title }}</h2>
+        <line-break center class="my-2 mb-10 w-3/4 sm:w-2/4 md:w-1/4" />
       </section>
+      <div class="min-h-full w-full px-0 md:px-5 flex flex-col md:flex-row">
+        <section class="w-3/4 md:w-3/12 mb-12 md:mb-0 self-center md:self-auto">
+          <img
+            v-if="bookData.thumbnailUrl"
+            :src="bookData.thumbnailUrl"
+            :alt="`Book Thumbnail of ${bookData.title}`"
+            class="max-h-screen mx-auto"
+          />
+          <img
+            v-else
+            src="@/assets/images/image-not-available.jpg"
+            :alt="`Book Thumbnail of ${bookData.title}`"
+            class="max-h-screen mx-auto"
+          />
+        </section>
+        <section class="px-4 md:w-9/12 lg:w-7/12">
+          <section>
+            <p class="text-2xl">{{ bookData.title }}</p>
+            <line-break class="my-2 w-1/4" />
+            <p v-if="!bookData.authors" class="text-2xl"
+              >No authors specified</p
+            >
+            <p v-for="author in bookData.authors" :key="author" class="text-xl">
+              {{ author }}
+            </p>
+            <line-break class="my-2 w-2/4" />
+            <p v-if="!bookData.categories">No categories specified</p>
+            <p
+              v-for="category in bookData.categories"
+              :key="category"
+              class="mb-1"
+            >
+              {{ category }}
+            </p>
+            <line-break class="my-2 w-3/4" />
+          </section>
+          <section v-if="bookData.description">
+            <p class="text-lg">
+              {{ bookData.description }}
+            </p>
+          </section>
+        </section>
+      </div>
     </article>
   </main>
   <div v-else class="flex-grow">Spinner</div>
@@ -66,8 +109,12 @@ import {
   deleteBook,
 } from '@/serviceClients/bookClient.js'
 import { getById } from '@/serviceClients/gbookClient.js'
+import LineBreak from '@C/LineBreak.vue'
+import TextIcon from '@C/TextIcon.vue'
+
 export default {
   name: 'Book',
+  components: { LineBreak, TextIcon },
   props: {
     gid: { type: String, required: true },
   },
@@ -114,13 +161,15 @@ export default {
             return
           }
 
+          const descriptionRegex = /<\/?(p|i|b|ul|li)>/gi
+
           bookData.value = {
             thumbnailUrl: getBestQualityThumbnail(resData.volumeInfo),
             title: resData.volumeInfo.title,
             authors: resData.volumeInfo.authors,
             categories: resData.volumeInfo.categories,
             description: resData.volumeInfo.description
-              ? resData.volumeInfo.description.replace(/<\/?[pib]>/gi, '')
+              ? resData.volumeInfo.description.replace(descriptionRegex, '')
               : null,
           }
 

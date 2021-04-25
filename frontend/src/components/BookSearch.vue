@@ -1,12 +1,13 @@
 <template>
-  <section class="mx-20 bg-primary-800 border-black border-t">
+  <section class="bg-primary-800 border-black border-t">
     <form
-      class="flex justify-around items-stretch"
+      ref="bookSearchFormRef"
+      class="flex flex-col sm:flex-row justify-around items-center sm:items-stretch"
       @submit.prevent="onNewSearch"
     >
-      <div class="w-3/12">
+      <div class="sm:w-3/12 my-2 sm:my-auto">
         <div class="min-h-full px-4">
-          <select v-model="searchType" class="h-16 w-3/4 text-center">
+          <select v-model="searchType" class="h-16 md:w-3/4 text-center">
             <option
               v-for="searchType in searchTypes"
               :key="searchType.slug"
@@ -17,19 +18,30 @@
           </select>
         </div>
       </div>
-      <div class="w-7/12">
-        <input
-          v-model="searchField"
-          type="text"
-          class="min-h-full w-full pl-4"
-        />
+      <div class="w-full sm:w-7/12">
+        <div class="min-h-full h-12 w-3/4 mx-auto my-2 sm:my-auto">
+          <input
+            v-model="searchField"
+            type="text"
+            class="min-h-full min-w-full pl-4"
+          />
+        </div>
       </div>
-      <div>
-        <book-button class="min-h-full" type="submit">Find</book-button>
+      <div class="sm:w-2/12">
+        <book-button type="submit" class="min-h-full w-24 sm:w-auto">
+          Find
+        </book-button>
       </div>
     </form>
-    <div>
-      <div class="mt-4 py-4 flex justify-around items-center">
+    <div :style="{ height: `${pageControlsHeight}px` }"></div>
+    <div
+      ref="pageControlsRef"
+      :class="[
+        isPageControlsFixed ? 'fixed top-0 w-full' : '',
+        'bg-primary-800',
+      ]"
+    >
+      <div class="py-4 flex justify-around items-center">
         <book-button class="min-h-full" @click="onPreviousPage">
           Previous Page
         </book-button>
@@ -48,7 +60,8 @@
 </template>
 
 <script>
-import { ref, onMounted, watchEffect } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watchEffect } from 'vue'
+import { scrollY } from '@/composables/useWindow.js'
 import { useRouter } from 'vue-router'
 
 import BookButton from '@C/BookButton.vue'
@@ -75,7 +88,37 @@ export default {
     const searchField = ref('science fiction')
     const searchPage = ref(1)
 
+    const bookSearchFormRef = ref(null)
+    const pageControlsRef = ref(null)
+    const isPageControlsFixed = ref(false)
+    const pageControlsHeight = ref(0)
+    const formBottom = ref(0)
+
+    const onScrollResize = () => {
+      // get page controls height
+      const controlsElHeight = pageControlsRef.value.offsetHeight
+
+      // find absolute form bottom
+      const elTop = bookSearchFormRef.value.offsetTop
+      const elHeight = bookSearchFormRef.value.offsetHeight
+      formBottom.value = elTop + elHeight
+
+      // if scrolled past form bottom
+      // make controls fixed, compensate height to prevent layout shift on Y axis
+      if (scrollY.value > formBottom.value) {
+        isPageControlsFixed.value = true
+        pageControlsHeight.value = controlsElHeight
+      } else {
+        isPageControlsFixed.value = false
+        pageControlsHeight.value = 0
+      }
+    }
+
     onMounted(() => {
+      onScrollResize()
+      window.addEventListener('scroll', onScrollResize)
+      window.addEventListener('resize', onScrollResize)
+
       watchEffect(() => {
         if (props.qSearchType) searchType.value = props.qSearchType
         if (props.qSearchQuery) searchField.value = props.qSearchQuery
@@ -85,7 +128,20 @@ export default {
       })
     })
 
+    onBeforeUnmount(() => {
+      window.removeEventListener('scroll', onScrollResize)
+      window.removeEventListener('resize', onScrollResize)
+    })
+
     const onNextPage = () => {
+      // scroll up to the first book only if already below it
+      if (scrollY.value > formBottom.value) {
+        window.scrollTo({
+          top: formBottom.value,
+          behavior: 'smooth',
+        })
+      }
+
       searchPage.value += 1
       router.push(
         `/books?t=${searchType.value}&q=${searchField.value}&p=${searchPage.value}`
@@ -94,6 +150,15 @@ export default {
 
     const onPreviousPage = () => {
       if (searchPage.value < 2) return false
+
+      // scroll up to the first book only if already below it
+      if (scrollY.value > formBottom.value) {
+        window.scrollTo({
+          top: formBottom.value,
+          behavior: 'smooth',
+        })
+      }
+
       searchPage.value -= 1
       router.push(
         `/books?t=${searchType.value}&q=${searchField.value}&p=${searchPage.value}`
@@ -115,6 +180,10 @@ export default {
       onNewSearch,
       onNextPage,
       onPreviousPage,
+      bookSearchFormRef,
+      pageControlsRef,
+      isPageControlsFixed,
+      pageControlsHeight,
     }
   },
 }
