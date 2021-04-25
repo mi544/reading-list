@@ -1,5 +1,5 @@
 <template>
-  <div class="h-28 w-1/2 flex flex-col">
+  <div class="h-32 w-full flex flex-col">
     <label for="username">{{ name }}</label>
     <input
       :id="name.toLowerCase()"

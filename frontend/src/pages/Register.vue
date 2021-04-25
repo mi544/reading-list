@@ -1,7 +1,7 @@
 <template>
   <main class="flex-grow flex flex-col items-center justify-center text-2xl">
     <form
-      class="flex flex-col justify-center items-center w-3/4"
+      class="w-10/12 sm:w-3/4 md:w-1/2 mt-4 flex flex-col justify-center items-center w-3/4"
       @submit.prevent="register"
     >
       <validated-input
@@ -32,10 +32,10 @@
         <spinner v-else />
       </book-button>
     </form>
-    <div class="py-12 flex">
+    <div class="py-6 sm:py-12 flex">
       <p>
         Have an account?
-        <router-link :to="redirectObject" class="underline">Login</router-link>
+        <link-item :to="redirectObject" class="underline">Login</link-item>
       </p>
     </div>
   </main>
@@ -49,10 +49,11 @@ import { registerAccount } from '@/serviceClients/authClient.js'
 import ValidatedInput from '@C/ValidatedInput.vue'
 import BookButton from '@C/BookButton.vue'
 import Spinner from '@C/Spinner.vue'
+import LinkItem from '@C/LinkItem.vue'
 
 export default {
   name: 'Register',
-  components: { ValidatedInput, BookButton, Spinner },
+  components: { LinkItem, ValidatedInput, BookButton, Spinner },
   props: {
     redirectAfterAuth: { type: String, default: () => null },
   },

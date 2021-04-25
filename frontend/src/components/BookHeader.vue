@@ -6,6 +6,7 @@
       <router-link
         :to="{ name: 'Index' }"
         class="h-full w-full p-2 flex items-center shadow-lg"
+        @click="onLinkClick"
       >
         <img
           src="@/assets/images/open-book.svg"
@@ -27,7 +28,7 @@
       :class="[
         isMobile
           ? isMenuOpen
-            ? 'absolute h-64 w-64 top-32 right-2'
+            ? 'absolute h-64 w-64 top-32 right-0'
             : 'hidden'
           : 'md:w-5/12',
       ]"
@@ -35,7 +36,7 @@
       <ul
         :class="[
           'h-full md:h-auto flex flex-col md:flex-row justify-evenly items-center text-2xl md:text-xl',
-          'bg-info-100 md:bg-transparent rounded-xl md:rounded-none',
+          'bg-info-100 md:bg-transparent rounded-bl-xl md:rounded-bl-none',
         ]"
       >
         <link-list-item :to="{ name: 'Books' }" @click="onLinkClick">
