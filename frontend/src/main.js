@@ -7,8 +7,6 @@ const app = createApp(App)
 
 app.use(router)
 
-// console.log(app.config)
-
 app.config.devtools = true
 
 app.mount('#app')

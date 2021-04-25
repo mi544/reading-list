@@ -70,7 +70,6 @@ export default {
 
           const resData = res.data
           if (!resData.items) {
-            console.log('BOOKS NOT FOUND!!!')
             return
           }
 

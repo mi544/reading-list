@@ -88,7 +88,6 @@ export default {
 
           const gidResData = gidRes.data
 
-          console.log('alrrr', gidResData)
           if (gidResData.gid) {
             isAdded.value = true
             if (gidResData.finished) {
@@ -112,7 +111,6 @@ export default {
 
           const resData = res.data
           if (!resData.id) {
-            console.log('BOOK NOT FOUND!!!')
             return
           }
 
@@ -145,7 +143,6 @@ export default {
       } catch (err) {
         if (err.isAxiosError) {
           if (err.response.status === 303) {
-            console.log('BOOK ALREADY EXISTS IN THE LIST')
             isAdded.value = true
             return
           }

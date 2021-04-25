@@ -1,6 +1,8 @@
 <template>
   <main class="flex-grow flex justify-center">
-    <card class="w-1/2 p-12 my-12 text-2xl">
+    <card
+      class="sm:w-3/4 lg:w-1/2 mx-4 my-8 md:mx-0 md:my-12 p-4 md:p-12 text-xl md:text-2xl"
+    >
       <p class="mb-6">
         This is a book store and we are committed to help you pick your next
         book!

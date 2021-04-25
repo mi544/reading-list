@@ -22,7 +22,6 @@ export const storeBook = async (gid, token) => {
 
 export const setBookOrder = async (bookOrderArr, token) => {
   const config = { headers: { Authorization: `Bearer ${token}` } }
-  console.log(config)
   return await bookServiceClient.post('/books/order', bookOrderArr, config)
 }
 

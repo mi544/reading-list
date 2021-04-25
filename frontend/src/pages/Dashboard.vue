@@ -52,9 +52,7 @@ export default {
         if (!res) throw Error()
 
         const resData = res.data
-        console.log(resData)
         if (!resData.length) {
-          console.log('NO BOOKS ADDED YET!!!')
           isLoaded.value = true
           return
         }
@@ -90,7 +88,6 @@ export default {
         if (bookIndex === 0) return
         const splicedBook = booksArr.value.splice(bookIndex, 1)[0]
         booksArr.value.splice(bookIndex - 1, 0, splicedBook)
-        console.log('moved up!')
       }
     }
 
@@ -100,7 +97,6 @@ export default {
         if (bookIndex === booksArr.value.length - 1) return
         const splicedBook = booksArr.value.splice(bookIndex, 1)[0]
         booksArr.value.splice(bookIndex + 1, 0, splicedBook)
-        console.log('moved down!')
       }
     }
 
@@ -113,9 +109,7 @@ export default {
       }))
 
       try {
-        console.log('sending....ALMOST sending OKAY', orderArr)
         await setBookOrder(orderArr, token.value)
-        console.log('All went OKAY')
       } catch (err) {
         console.error(err)
       }
@@ -128,7 +122,6 @@ export default {
         if (a[column] > b[column]) return +1
         return 0
       })
-      console.log(booksArr.value)
     }
 
     const reverseOrder = () => {
