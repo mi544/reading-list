@@ -16,7 +16,7 @@ You can access the deployed version of Reading List here:
 - [Tests](#Tests)
 - [Questions](#Questions)
 - [Authors](#Authors)
-- [Attributions](#Attribution)
+- [Attributions](#Attributions)
 
 ## Description
 
@@ -50,6 +50,19 @@ yarn
 ### Back-end
 
 - Rename the `/backend/.env.example` to `/backend/.env` and enter your API key for [Google Books API](https://developers.google.com/books/docs/overview) as well as your MySQL database credentials
+
+Run the following on your server to install all dependencies and generate keys
+
+```bash
+cd backend
+composer install
+php artisan migrate:reset
+php artisan migrate
+php artisan key:generate
+php artisan passport:keys
+php artisan passport:client --personal
+```
+
 - Set up a PHP server like Nginx or Apache to serve the Laravel backend
 
 ### Front-end
